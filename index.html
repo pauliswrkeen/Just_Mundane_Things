@@ -35,11 +35,11 @@
             padding: 15px;
             margin: 15px 0;
             border-radius: 10px;
-            cursor: pointer;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        .card:active {
-            background: #f0f0f0;
+        .card a {
+            text-decoration: none;
+            display: block;
         }
         .hidden {
             display: none;
@@ -50,6 +50,28 @@
             margin: 10px 0;
             border: 1px solid #ddd;
             border-radius: 5px;
+        }
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 999;
+            overflow: auto;
+        }
+        .modal-content {
+            background: white;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .close {
+            float: right;
+            font-size: 25px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -67,40 +89,45 @@
 </div>
 
 <div id="adminPage" class="hidden">
-    <h2>Admin Panel</h2>
+    <h2>🔐 Admin Panel</h2>
     <input type="password" id="password" placeholder="Enter password">
     <button onclick="login()">Login</button>
     <div id="adminForms" class="hidden">
-        <h3>Add Story</h3>
+        <hr>
+        <h3>📖 Add Story</h3>
         <input type="text" id="storyTitle" placeholder="Title">
         <textarea id="storyContent" rows="4" placeholder="Your story..."></textarea>
-        <button onclick="addStory()">Add Story</button>
+        <button onclick="addStory()">Publish Story</button>
         
-        <h3>Set Word of Day</h3>
+        <hr>
+        <h3>📝 Set Word of Day</h3>
         <input type="text" id="wordText" placeholder="Word">
         <textarea id="wordDef" rows="2" placeholder="Definition..."></textarea>
         <button onclick="setWord()">Set Word</button>
         
-        <h3>Add Lyrics</h3>
-        <input type="text" id="songName" placeholder="Song name">
+        <hr>
+        <h3>🎵 Add Lyrics</h3>
+        <input type="text" id="songName" placeholder="Song name & artist">
         <textarea id="lyricsText" rows="4" placeholder="Lyrics..."></textarea>
         <button onclick="addLyrics()">Add Lyrics</button>
         
-        <h3>Add Video</h3>
+        <hr>
+        <h3>🎬 Add Video</h3>
         <input type="text" id="videoTitle" placeholder="Video title">
         <input type="text" id="videoLink" placeholder="YouTube URL">
         <button onclick="addVideo()">Add Video</button>
     </div>
 </div>
 
-<div id="modal" class="hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:999; overflow:auto;">
-    <div style="background:white; max-width:500px; margin:50px auto; padding:20px; border-radius:10px;">
-        <span onclick="closeModal()" style="float:right; font-size:25px; cursor:pointer;">&times;</span>
-        <div id="modalContent"></div>
+<div id="modal" class="hidden modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div id="modalBody"></div>
     </div>
 </div>
 
 <script>
+    // Load saved data
     let stories = JSON.parse(localStorage.getItem('stories')) || [];
     let wordOfDay = JSON.parse(localStorage.getItem('wordOfDay')) || {word:"Perseverance", def:"Keep going even when it's hard"};
     let lyrics = JSON.parse(localStorage.getItem('lyrics')) || [];
@@ -124,6 +151,7 @@
         document.getElementById('homePage').classList.add('hidden');
         document.getElementById('adminPage').classList.remove('hidden');
         document.getElementById('adminForms').classList.add('hidden');
+        document.getElementById('password').value = '';
     }
 
     function login() {
@@ -131,85 +159,149 @@
         if(pwd === 'perseverance2025') {
             isLoggedIn = true;
             document.getElementById('adminForms').classList.remove('hidden');
-            alert('Logged in!');
+            alert('✅ Logged in! You can now delete content.');
         } else {
-            alert('Wrong password');
+            alert('❌ Wrong password');
         }
     }
 
     function displayFeed() {
         let feed = document.getElementById('feed');
-        let items = [];
+        let html = '';
         
-        items.push({type:'✨ Word of Day✨', title:wordOfDay.word, content:wordOfDay.def, full:wordOfDay});
-        stories.forEach(s => items.push({type:'📚 Story', title:s.title, content:s.content.substring(0,100), full:s}));
-        lyrics.forEach(l => items.push({type:'🎵 Lyrics', title:l.song, content:l.lyrics.substring(0,100), full:l}));
-        videos.forEach(v => items.push({type:'🎬 Video', title:v.title, content:'Click to watch', full:v, isVideo:true}));
+        // Word of the day card
+        html += `<div class="card" onclick='showWord()'>
+                    <strong>✨ Word of the Day ✨</strong><br>
+                    <b>${escapeHtml(wordOfDay.word)}</b><br>
+                    <small>${escapeHtml(wordOfDay.def.substring(0, 80))}...</small>
+                </div>`;
         
-        if(items.length === 0) {
-            feed.innerHTML = '<p>Nothing yet. Go to Admin to add content!</p>';
-            return;
+        // Stories
+        stories.forEach((s, i) => {
+            html += `<div class="card" onclick='showStory(${i})'>
+                        <strong>📚 Short Story</strong><br>
+                        <b>${escapeHtml(s.title)}</b><br>
+                        <small>${escapeHtml(s.content.substring(0, 80))}...</small>
+                    </div>`;
+        });
+        
+        // Lyrics
+        lyrics.forEach((l, i) => {
+            html += `<div class="card" onclick='showLyrics(${i})'>
+                        <strong>🎵 Lyrics</strong><br>
+                        <b>${escapeHtml(l.song)}</b><br>
+                        <small>${escapeHtml(l.lyrics.substring(0, 80))}...</small>
+                    </div>`;
+        });
+        
+        // Videos
+        videos.forEach((v, i) => {
+            html += `<div class="card" onclick='showVideo(${i})'>
+                        <strong>🎬 Video</strong><br>
+                        <b>${escapeHtml(v.title)}</b><br>
+                        <small>Click to watch</small>
+                    </div>`;
+        });
+        
+        if(stories.length === 0 && lyrics.length === 0 && videos.length === 0) {
+            html = '<p>✨ Nothing yet. Go to Admin to add content! ✨</p>';
         }
         
-        feed.innerHTML = items.map((item, i) => `
-            <div class="card" onclick="showDetails(${i})">
-                <strong>${item.type}</strong><br>
-                <b>${escapeHtml(item.title)}</b><br>
-                <small>${escapeHtml(item.content)}</small>
-            </div>
-        `).join('');
-        
-        window.currentItems = items;
+        feed.innerHTML = html;
     }
 
-    function showDetails(index) {
-        let item = window.currentItems[index];
+    function showWord() {
         let modal = document.getElementById('modal');
-        let content = document.getElementById('modalContent');
-        
-        let html = `<h3>${escapeHtml(item.title)}</h3><hr>`;
-        
-        if(item.type === '✨ Word of Day✨') {
-            html += `<p>${escapeHtml(item.full.def)}</p>`;
-        } else if(item.type === '📚 Story') {
-            html += `<p style="white-space:pre-wrap">${escapeHtml(item.full.content)}</p>`;
-        } else if(item.type === '🎵 Lyrics') {
-            html += `<p style="white-space:pre-wrap">${escapeHtml(item.full.lyrics)}</p>`;
-        } else if(item.type === '🎬 Video') {
-            let videoId = extractId(item.full.url);
-            if(videoId) {
-                html += `<iframe width="100%" height="250" src="https://www.youtube.com/embed/${videoId}" frameborder="0"></iframe>`;
-            } else {
-                html += `<p>Invalid URL</p>`;
-            }
-        }
-        
-        if(isLoggedIn && item.type !== '✨ Word of Day✨') {
-            html += `<br><button onclick="deleteItem(${index})" style="background:red; margin-top:10px;">Delete</button>`;
-        }
-        
-        content.innerHTML = html;
+        let body = document.getElementById('modalBody');
+        body.innerHTML = `
+            <h3>✨ ${escapeHtml(wordOfDay.word)} ✨</h3>
+            <hr>
+            <p>${escapeHtml(wordOfDay.def)}</p>
+        `;
         modal.classList.remove('hidden');
     }
 
-    function extractId(url) {
+    function showStory(index) {
+        let story = stories[index];
+        let modal = document.getElementById('modal');
+        let body = document.getElementById('modalBody');
+        body.innerHTML = `
+            <h3>📖 ${escapeHtml(story.title)}</h3>
+            <small>📅 ${story.date || new Date().toLocaleDateString()}</small>
+            <hr>
+            <p style="white-space:pre-wrap; line-height:1.6;">${escapeHtml(story.content)}</p>
+            ${isLoggedIn ? `<br><button onclick="deleteStory(${index})" style="background:#e74c3c; color:white; padding:10px; border:none; border-radius:5px;">🗑️ Delete Story</button>` : ''}
+        `;
+        modal.classList.remove('hidden');
+        window.currentStoryIndex = index;
+    }
+
+    function showLyrics(index) {
+        let lyric = lyrics[index];
+        let modal = document.getElementById('modal');
+        let body = document.getElementById('modalBody');
+        body.innerHTML = `
+            <h3>🎵 ${escapeHtml(lyric.song)}</h3>
+            <small>📅 ${lyric.date || new Date().toLocaleDateString()}</small>
+            <hr>
+            <p style="white-space:pre-wrap; line-height:1.6;">${escapeHtml(lyric.lyrics)}</p>
+            ${isLoggedIn ? `<br><button onclick="deleteLyrics(${index})" style="background:#e74c3c; color:white; padding:10px; border:none; border-radius:5px;">🗑️ Delete Lyrics</button>` : ''}
+        `;
+        modal.classList.remove('hidden');
+        window.currentLyricsIndex = index;
+    }
+
+    function showVideo(index) {
+        let video = videos[index];
+        let videoId = extractYouTubeId(video.url);
+        let modal = document.getElementById('modal');
+        let body = document.getElementById('modalBody');
+        let videoHtml = videoId ? `<iframe width="100%" height="250" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen style="border-radius:8px;"></iframe>` : '<p>❌ Invalid YouTube URL</p>';
+        body.innerHTML = `
+            <h3>🎬 ${escapeHtml(video.title)}</h3>
+            <small>📅 ${video.date || new Date().toLocaleDateString()}</small>
+            <hr>
+            ${videoHtml}
+            ${isLoggedIn ? `<br><button onclick="deleteVideo(${index})" style="background:#e74c3c; color:white; padding:10px; border:none; border-radius:5px;">🗑️ Delete Video</button>` : ''}
+        `;
+        modal.classList.remove('hidden');
+        window.currentVideoIndex = index;
+    }
+
+    function extractYouTubeId(url) {
+        if(!url) return null;
         let match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/);
         return match ? match[1] : null;
     }
 
-    function deleteItem(index) {
-        let item = window.currentItems[index];
-        if(item.type === '📚 Story') {
-            stories = stories.filter(s => s.title !== item.title);
-        } else if(item.type === '🎵 Lyrics') {
-            lyrics = lyrics.filter(l => l.song !== item.title);
-        } else if(item.type === '🎬 Video') {
-            videos = videos.filter(v => v.title !== item.title);
+    function deleteStory(index) {
+        if(confirm('Delete this story permanently?')) {
+            stories.splice(index, 1);
+            saveAll();
+            closeModal();
+            displayFeed();
+            alert('✅ Story deleted!');
         }
-        saveAll();
-        closeModal();
-        displayFeed();
-        alert('Deleted!');
+    }
+
+    function deleteLyrics(index) {
+        if(confirm('Delete these lyrics permanently?')) {
+            lyrics.splice(index, 1);
+            saveAll();
+            closeModal();
+            displayFeed();
+            alert('✅ Lyrics deleted!');
+        }
+    }
+
+    function deleteVideo(index) {
+        if(confirm('Delete this video permanently?')) {
+            videos.splice(index, 1);
+            saveAll();
+            closeModal();
+            displayFeed();
+            alert('✅ Video deleted!');
+        }
     }
 
     function closeModal() {
@@ -220,12 +312,14 @@
         let title = document.getElementById('storyTitle').value;
         let content = document.getElementById('storyContent').value;
         if(title && content) {
-            stories.unshift({title, content, date:new Date().toLocaleDateString()});
+            stories.unshift({title, content, date: new Date().toLocaleDateString()});
             saveAll();
-            alert('Story added!');
+            alert('✅ Story published!');
             document.getElementById('storyTitle').value = '';
             document.getElementById('storyContent').value = '';
             displayFeed();
+        } else {
+            alert('❌ Please fill in both title and content.');
         }
     }
 
@@ -235,8 +329,12 @@
         if(word && def) {
             wordOfDay = {word, def};
             saveAll();
-            alert('Word updated!');
+            alert('✅ Word of the Day updated!');
+            document.getElementById('wordText').value = '';
+            document.getElementById('wordDef').value = '';
             displayFeed();
+        } else {
+            alert('❌ Please fill in both word and definition.');
         }
     }
 
@@ -244,12 +342,14 @@
         let song = document.getElementById('songName').value;
         let lyricsText = document.getElementById('lyricsText').value;
         if(song && lyricsText) {
-            lyrics.unshift({song, lyrics:lyricsText, date:new Date().toLocaleDateString()});
+            lyrics.unshift({song, lyrics: lyricsText, date: new Date().toLocaleDateString()});
             saveAll();
-            alert('Lyrics added!');
+            alert('✅ Lyrics added!');
             document.getElementById('songName').value = '';
             document.getElementById('lyricsText').value = '';
             displayFeed();
+        } else {
+            alert('❌ Please fill in both song name and lyrics.');
         }
     }
 
@@ -257,12 +357,14 @@
         let title = document.getElementById('videoTitle').value;
         let url = document.getElementById('videoLink').value;
         if(title && url) {
-            videos.unshift({title, url, date:new Date().toLocaleDateString()});
+            videos.unshift({title, url, date: new Date().toLocaleDateString()});
             saveAll();
-            alert('Video added!');
+            alert('✅ Video added!');
             document.getElementById('videoTitle').value = '';
             document.getElementById('videoLink').value = '';
             displayFeed();
+        } else {
+            alert('❌ Please fill in both title and URL.');
         }
     }
 
@@ -276,6 +378,15 @@
         });
     }
 
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+        let modal = document.getElementById('modal');
+        if(event.target === modal) {
+            closeModal();
+        }
+    }
+
+    // Start the app
     displayFeed();
 </script>
 
