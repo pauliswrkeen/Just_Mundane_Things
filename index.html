@@ -18,7 +18,7 @@
             padding: 15px;
         }
         .container {
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
             width: 100%;
         }
@@ -41,7 +41,7 @@
         nav {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             margin-top: 15px;
             flex-wrap: wrap;
         }
@@ -49,83 +49,132 @@
             background: #e67e22;
             color: white;
             border: none;
-            padding: 10px 16px;
+            padding: 8px 14px;
             cursor: pointer;
             border-radius: 8px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: bold;
-            flex: 0 0 auto;
         }
-        nav button:active {
+        nav button.active {
             background: #d35400;
             transform: scale(0.98);
         }
-        .section {
+        .feed {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .feed-card {
             background: white;
-            padding: 20px;
-            margin-bottom: 25px;
             border-radius: 12px;
+            padding: 18px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            width: 100%;
-            overflow-x: auto;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border-left: 5px solid #e67e22;
         }
-        .section h2 {
-            color: #e67e22;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #ecf0f1;
-            padding-bottom: 8px;
-            font-size: 1.4rem;
+        .feed-card:active {
+            transform: scale(0.99);
         }
-        .post {
-            margin-bottom: 25px;
-            padding: 15px;
-            background: #fef9e8;
-            border-left: 4px solid #e67e22;
-            border-radius: 8px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-        .post h3 {
-            color: #2c3e50;
-            margin-bottom: 8px;
-            font-size: 1.2rem;
-        }
-        .post-date {
-            color: #7f8c8d;
-            font-size: 0.75rem;
+        .card-type {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: bold;
             margin-bottom: 10px;
+        }
+        .type-story { background: #3498db; color: white; }
+        .type-word { background: #9b59b6; color: white; }
+        .type-lyrics { background: #e91e63; color: white; }
+        .type-video { background: #f39c12; color: white; }
+        .type-picture { background: #1abc9c; color: white; }
+        
+        .feed-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+        .snippet {
+            color: #555;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin: 10px 0;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            font-size: 0.7rem;
+            color: #7f8c8d;
         }
         .credit {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: #16a085;
-            margin-top: 10px;
-            padding-top: 8px;
-            border-top: 1px dashed #ddd;
-            font-style: italic;
+            margin-top: 8px;
+            padding-top: 5px;
+            border-top: 1px dashed #eee;
         }
-        .credit a {
-            color: #2980b9;
-            text-decoration: none;
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px;
         }
-        .credit a:hover {
-            text-decoration: underline;
+        .modal-content {
+            background: white;
+            max-width: 600px;
+            margin: 50px auto;
+            border-radius: 15px;
+            padding: 25px;
+            position: relative;
         }
-        .word-card {
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #999;
+        }
+        .close-modal:hover {
+            color: #333;
+        }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            margin: 15px 0;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .word-card-full {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 25px 15px;
+            padding: 25px;
             text-align: center;
             border-radius: 15px;
-            word-wrap: break-word;
-        }
-        .word-card h3 {
-            font-size: 1.6rem;
-            margin-bottom: 10px;
-            word-break: break-word;
-        }
-        .word-card p {
-            font-size: 1rem;
-            line-height: 1.5;
         }
         input, textarea {
             width: 100%;
@@ -135,10 +184,6 @@
             border-radius: 8px;
             font-family: inherit;
             font-size: 1rem;
-            box-sizing: border-box;
-        }
-        textarea {
-            resize: vertical;
         }
         button {
             background: #e67e22;
@@ -149,45 +194,10 @@
             border-radius: 8px;
             font-size: 1rem;
             font-weight: bold;
-            width: 100%;
-            max-width: 300px;
         }
-        button:active {
-            background: #d35400;
-        }
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            margin: 15px 0;
-            border-radius: 8px;
-        }
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        footer {
-            text-align: center;
-            padding: 20px;
-            color: #7f8c8d;
-            margin-top: 30px;
-            font-size: 0.8rem;
-        }
-        .password-prompt {
-            text-align: center;
-            padding: 30px 20px;
-            background: white;
-            border-radius: 12px;
-        }
-        .password-prompt input {
-            width: 100%;
-            max-width: 250px;
-            margin: 15px auto;
-            text-align: center;
+        .delete-btn {
+            background: #e74c3c;
+            margin-top: 10px;
         }
         .admin-badge {
             background: #e74c3c;
@@ -198,62 +208,22 @@
             display: inline-block;
             margin-bottom: 15px;
         }
-        .delete-btn {
-            background: #e74c3c;
-            margin-top: 12px;
-            width: auto;
-            padding: 8px 16px;
-            font-size: 0.85rem;
-        }
-        .admin-section h3 {
-            margin-top: 25px;
-            margin-bottom: 10px;
-            color: #2c3e50;
-            font-size: 1.2rem;
-        }
-        hr {
-            margin: 20px 0;
-            border: none;
-            border-top: 1px solid #ecf0f1;
-        }
         .help-text {
             font-size: 0.75rem;
             color: #7f8c8d;
             margin-top: -5px;
             margin-bottom: 10px;
         }
-        @media (min-width: 768px) {
-            body {
-                padding: 30px;
-            }
-            h1 {
-                font-size: 2.5rem;
-            }
-            nav button {
-                padding: 12px 24px;
-                font-size: 1rem;
-            }
-            .section {
-                padding: 30px;
-            }
-            .word-card h3 {
-                font-size: 2.2rem;
-            }
-            button {
-                width: auto;
-                min-width: 200px;
-            }
+        hr {
+            margin: 20px 0;
         }
-        @media (max-width: 480px) {
-            nav button {
-                padding: 8px 12px;
-                font-size: 0.75rem;
-            }
-            .section {
+        @media (max-width: 600px) {
+            .feed-card {
                 padding: 15px;
             }
-            .post {
-                padding: 12px;
+            .modal-content {
+                padding: 20px;
+                margin: 30px auto;
             }
         }
     </style>
@@ -262,48 +232,31 @@
     <div class="container">
         <header>
             <h1>📖 My Creative Corner</h1>
-            <p>Short Stories | Word of the Day | Lyrics & Videos</p>
+            <p>Short Stories | Word of the Day | Lyrics | Videos | Pictures</p>
             <nav>
-                <button onclick="showSection('stories')">📚 Stories</button>
-                <button onclick="showSection('word')">📝 Word</button>
-                <button onclick="showSection('music')">🎵 Lyrics</button>
-                <button onclick="showSection('videos')">🎬 Videos</button>
-                <button onclick="showSection('pictures')">🖼️ Pictures</button>
+                <button id="home-btn" class="active" onclick="showHome()">🏠 Home Feed</button>
                 <button onclick="showAdminPanel()">⚙️ Admin</button>
             </nav>
         </header>
 
-        <div id="stories" class="section">
-            <h2>📚 Short Stories</h2>
-            <div id="stories-list"></div>
-        </div>
+        <!-- Home Feed Section -->
+        <div id="home-feed" class="feed"></div>
 
-        <div id="word" class="section" style="display:none;">
-            <h2>📝 Word of the Day</h2>
-            <div id="word-card" class="word-card"></div>
-        </div>
-
-        <div id="music" class="section" style="display:none;">
-            <h2>🎵 Music & Lyrics</h2>
-            <div id="lyrics-list"></div>
-        </div>
-
-        <div id="videos" class="section" style="display:none;">
-            <h2>🎬 Videos</h2>
-            <div id="videos-list"></div>
-        </div>
-
-        <div id="pictures" class="section" style="display:none;">
-            <h2>🖼️ Pictures & Jokes</h2>
-            <div id="pictures-list"></div>
-        </div>
-
-        <div id="admin" class="section" style="display:none;">
+        <!-- Admin Panel -->
+        <div id="admin-panel" style="display:none;">
             <div id="admin-content"></div>
         </div>
         
+        <!-- Modal for full content -->
+        <div id="content-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeModal()">&times;</span>
+                <div id="modal-body"></div>
+            </div>
+        </div>
+        
         <footer>
-            <p>✨ All content shared with respect to original creators | Proper credit given where due ✨</p>
+            <p>✨ Tap any card to read full content | Always credit original creators ✨</p>
         </footer>
     </div>
 
@@ -320,10 +273,241 @@
         let pictures = JSON.parse(localStorage.getItem('pictures')) || [];
         let isAdminAuthenticated = false;
         
+        // Build unified feed
+        function buildFeed() {
+            let feedItems = [];
+            
+            // Add word of the day
+            feedItems.push({
+                type: 'word',
+                typeLabel: '📝 Word of the Day',
+                typeClass: 'type-word',
+                title: wordOfDay.word,
+                snippet: wordOfDay.definition.substring(0, 120) + (wordOfDay.definition.length > 120 ? '...' : ''),
+                fullData: wordOfDay,
+                date: new Date().toLocaleDateString()
+            });
+            
+            // Add stories
+            stories.forEach(item => {
+                feedItems.push({
+                    type: 'story',
+                    typeLabel: '📚 Short Story',
+                    typeClass: 'type-story',
+                    title: item.title,
+                    snippet: (item.content || '').substring(0, 150) + ((item.content || '').length > 150 ? '...' : ''),
+                    fullData: item,
+                    date: item.date,
+                    credit: item.credit
+                });
+            });
+            
+            // Add lyrics
+            lyrics.forEach(item => {
+                feedItems.push({
+                    type: 'lyrics',
+                    typeLabel: '🎵 Lyrics',
+                    typeClass: 'type-lyrics',
+                    title: item.song,
+                    snippet: (item.lyrics || '').substring(0, 120) + ((item.lyrics || '').length > 120 ? '...' : ''),
+                    fullData: item,
+                    date: item.date,
+                    credit: item.credit
+                });
+            });
+            
+            // Add videos
+            videos.forEach(item => {
+                feedItems.push({
+                    type: 'video',
+                    typeLabel: '🎬 Video',
+                    typeClass: 'type-video',
+                    title: item.title,
+                    snippet: `Watch: ${item.title}`,
+                    fullData: item,
+                    date: item.date,
+                    credit: item.credit,
+                    url: item.url
+                });
+            });
+            
+            // Add pictures
+            pictures.forEach(item => {
+                feedItems.push({
+                    type: 'picture',
+                    typeLabel: '🖼️ Picture',
+                    typeClass: 'type-picture',
+                    title: item.title,
+                    snippet: item.caption ? (item.caption.substring(0, 100) + (item.caption.length > 100 ? '...' : '')) : 'Tap to view image',
+                    fullData: item,
+                    date: item.date,
+                    credit: item.credit,
+                    imageUrl: item.imageUrl,
+                    caption: item.caption
+                });
+            });
+            
+            // Sort by date (newest first) - put word of day at top always
+            feedItems.sort((a, b) => {
+                if(a.type === 'word') return -1;
+                if(b.type === 'word') return 1;
+                return new Date(b.date) - new Date(a.date);
+            });
+            
+            return feedItems;
+        }
+        
+        function displayHome() {
+            const container = document.getElementById('home-feed');
+            const feedItems = buildFeed();
+            
+            if(feedItems.length === 0) {
+                container.innerHTML = '<div class="feed-card" style="text-align:center;">✨ Nothing yet. Go to Admin Panel to add your first content! ✨</div>';
+                return;
+            }
+            
+            container.innerHTML = feedItems.map((item, idx) => `
+                <div class="feed-card" onclick="showFullContent(${idx})">
+                    <span class="card-type ${item.typeClass}">${item.typeLabel}</span>
+                    <h3>${escapeHtml(item.title)}</h3>
+                    <div class="snippet">${escapeHtml(item.snippet)}</div>
+                    <div class="card-footer">
+                        <span>📅 ${item.date}</span>
+                        <span>👆 Tap to read</span>
+                    </div>
+                    ${item.credit ? `<div class="credit">📌 Credit: ${escapeHtml(item.credit)}</div>` : ''}
+                </div>
+            `).join('');
+            
+            // Store feed items globally for modal access
+            window.currentFeedItems = feedItems;
+        }
+        
+        function showFullContent(index) {
+            const item = window.currentFeedItems[index];
+            const modal = document.getElementById('content-modal');
+            const modalBody = document.getElementById('modal-body');
+            
+            let html = '';
+            
+            switch(item.type) {
+                case 'word':
+                    html = `
+                        <div class="word-card-full">
+                            <h2 style="font-size:2rem;">✨ ${escapeHtml(item.fullData.word)} ✨</h2>
+                            <p style="margin-top:15px;">${escapeHtml(item.fullData.definition)}</p>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'story':
+                    html = `
+                        <h2>📖 ${escapeHtml(item.fullData.title)}</h2>
+                        <div style="color:#7f8c8d; margin:10px 0;">📅 ${item.date}</div>
+                        <p style="white-space:pre-wrap; line-height:1.8;">${escapeHtml(item.fullData.content)}</p>
+                        ${item.credit ? `<div class="credit" style="margin-top:20px;">📌 Credit: ${escapeHtml(item.credit)}</div>` : ''}
+                    `;
+                    break;
+                    
+                case 'lyrics':
+                    html = `
+                        <h2>🎵 ${escapeHtml(item.fullData.song)}</h2>
+                        <div style="color:#7f8c8d; margin:10px 0;">📅 ${item.date}</div>
+                        <p style="white-space:pre-wrap; line-height:1.8; font-style:italic;">${escapeHtml(item.fullData.lyrics)}</p>
+                        ${item.credit ? `<div class="credit" style="margin-top:20px;">🎼 Credit: ${escapeHtml(item.credit)}</div>` : ''}
+                    `;
+                    break;
+                    
+                case 'video':
+                    const videoId = extractYouTubeId(item.fullData.url);
+                    html = `
+                        <h2>🎬 ${escapeHtml(item.fullData.title)}</h2>
+                        <div style="color:#7f8c8d; margin:10px 0;">📅 ${item.date}</div>
+                        ${videoId ? `<div class="video-container"><iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe></div>` : '<p>❌ Invalid YouTube URL</p>'}
+                        ${item.credit ? `<div class="credit" style="margin-top:20px;">📹 Credit: ${escapeHtml(item.credit)}</div>` : ''}
+                    `;
+                    break;
+                    
+                case 'picture':
+                    html = `
+                        <h2>🖼️ ${escapeHtml(item.fullData.title)}</h2>
+                        <div style="color:#7f8c8d; margin:10px 0;">📅 ${item.date}</div>
+                        ${item.fullData.imageUrl ? `<img src="${escapeHtml(item.fullData.imageUrl)}" alt="${escapeHtml(item.fullData.title)}">` : ''}
+                        ${item.fullData.caption ? `<p style="white-space:pre-wrap; margin-top:15px; font-style:italic;">"${escapeHtml(item.fullData.caption)}"</p>` : ''}
+                        ${item.credit ? `<div class="credit" style="margin-top:20px;">📸 Credit: ${escapeHtml(item.credit)}</div>` : ''}
+                    `;
+                    break;
+            }
+            
+            // Add delete button if admin is logged in
+            if(isAdminAuthenticated) {
+                html += `<button class="delete-btn" onclick="deleteFromFeed('${item.type}', ${index})" style="margin-top:20px;">🗑️ Delete This Item</button>`;
+            }
+            
+            modalBody.innerHTML = html;
+            modal.style.display = 'block';
+        }
+        
+        function deleteFromFeed(type, feedIndex) {
+            if(!confirm('Delete this item permanently?')) return;
+            
+            const item = window.currentFeedItems[feedIndex];
+            
+            switch(type) {
+                case 'story':
+                    // Find and remove from stories array
+                    const storyTitle = item.title;
+                    const storyIndex = stories.findIndex(s => s.title === storyTitle && s.date === item.date);
+                    if(storyIndex !== -1) stories.splice(storyIndex, 1);
+                    break;
+                case 'lyrics':
+                    const lyricsIndex = lyrics.findIndex(l => l.song === item.title && l.date === item.date);
+                    if(lyricsIndex !== -1) lyrics.splice(lyricsIndex, 1);
+                    break;
+                case 'video':
+                    const videoIndex = videos.findIndex(v => v.title === item.title && v.date === item.date);
+                    if(videoIndex !== -1) videos.splice(videoIndex, 1);
+                    break;
+                case 'picture':
+                    const pictureIndex = pictures.findIndex(p => p.title === item.title && p.date === item.date);
+                    if(pictureIndex !== -1) pictures.splice(pictureIndex, 1);
+                    break;
+                case 'word':
+                    alert('Word of the Day cannot be deleted, but you can change it in Admin Panel.');
+                    closeModal();
+                    return;
+            }
+            
+            saveAll();
+            closeModal();
+            displayHome();
+            alert('✅ Deleted successfully!');
+        }
+        
+        function extractYouTubeId(url) {
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : null;
+        }
+        
+        function showHome() {
+            document.getElementById('home-feed').style.display = 'block';
+            document.getElementById('admin-panel').style.display = 'none';
+            document.getElementById('home-btn').classList.add('active');
+            displayHome();
+        }
+        
+        function closeModal() {
+            document.getElementById('content-modal').style.display = 'none';
+        }
+        
+        // Admin functions
         function showAdminPanel() {
             if(isAdminAuthenticated) {
                 displayAdminPanel();
-                showSection('admin');
+                document.getElementById('home-feed').style.display = 'none';
+                document.getElementById('admin-panel').style.display = 'block';
+                document.getElementById('home-btn').classList.remove('active');
             } else {
                 showPasswordPrompt();
             }
@@ -332,7 +516,7 @@
         function showPasswordPrompt() {
             const adminDiv = document.getElementById('admin-content');
             adminDiv.innerHTML = `
-                <div class="password-prompt">
+                <div style="text-align:center; padding:30px;">
                     <h2>🔐 Admin Access</h2>
                     <p>Enter password to manage content:</p>
                     <input type="password" id="admin-password" placeholder="Enter password">
@@ -340,7 +524,9 @@
                     <button onclick="checkPassword()">Unlock Panel</button>
                 </div>
             `;
-            showSection('admin');
+            document.getElementById('home-feed').style.display = 'none';
+            document.getElementById('admin-panel').style.display = 'block';
+            document.getElementById('home-btn').classList.remove('active');
         }
         
         function checkPassword() {
@@ -350,315 +536,8 @@
                 displayAdminPanel();
             } else {
                 alert('❌ Incorrect password!');
-                showSection('stories');
+                showHome();
             }
         }
         
-        function displayAdminPanel() {
-            const adminDiv = document.getElementById('admin-content');
-            adminDiv.innerHTML = `
-                <div class="admin-badge">🔒 Admin Mode - You can edit content</div>
-                <h2>⚙️ Admin Panel</h2>
-                
-                <div class="admin-section">
-                    <h3>📖 Add Short Story</h3>
-                    <input type="text" id="story-title" placeholder="Story Title">
-                    <textarea id="story-content" rows="5" placeholder="Write your story here..."></textarea>
-                    <input type="text" id="story-credit" placeholder="Source/Credit (e.g., 'Original by Me' or 'Inspired by...')">
-                    <div class="help-text">📌 Always credit your sources when inspired by others</div>
-                    <button onclick="addStory()">Publish Story</button>
-                </div>
-                
-                <hr>
-                
-                <div class="admin-section">
-                    <h3>📝 Set Word of the Day</h3>
-                    <input type="text" id="word-title" placeholder="Word" value="${escapeHtml(wordOfDay.word)}">
-                    <textarea id="word-definition" rows="3" placeholder="Definition and example...">${escapeHtml(wordOfDay.definition)}</textarea>
-                    <button onclick="setWordOfDay()">Update Word</button>
-                </div>
-                
-                <hr>
-                
-                <div class="admin-section">
-                    <h3>🎵 Add Lyrics</h3>
-                    <input type="text" id="song-title" placeholder="Song Title & Artist">
-                    <textarea id="lyrics-content" rows="5" placeholder="Lyrics..."></textarea>
-                    <input type="text" id="lyrics-credit" placeholder="Credit/Source (e.g., 'Lyrics by Artist Name')">
-                    <div class="help-text">⚠️ For personal use only. Always credit songwriters/artists.</div>
-                    <button onclick="addLyrics()">Add Lyrics</button>
-                </div>
-                
-                <hr>
-                
-                <div class="admin-section">
-                    <h3>🎬 Add Video (YouTube)</h3>
-                    <input type="text" id="video-title" placeholder="Video Title">
-                    <input type="text" id="video-url" placeholder="YouTube URL">
-                    <input type="text" id="video-credit" placeholder="Credit/Source (e.g., 'Video by YouTube Channel Name')">
-                    <button onclick="addVideo()">Add Video</button>
-                </div>
-                
-                <hr>
-                
-                <div class="admin-section">
-                    <h3>🖼️ Add Picture or Joke</h3>
-                    <input type="text" id="picture-title" placeholder="Title (e.g., 'Funny Cat' or 'Beautiful Sunset')">
-                    <input type="text" id="picture-url" placeholder="Image URL (upload to Imgur or use direct link)">
-                    <textarea id="picture-caption" rows="3" placeholder="Caption or joke text..."></textarea>
-                    <input type="text" id="picture-credit" placeholder="Credit/Source (e.g., 'Photo by Photographer Name' or 'Joke from...')">
-                    <div class="help-text">📸 For images: Use free stock photos (Unsplash, Pexels) or your own. Always credit!</div>
-                    <button onclick="addPicture()">Add Picture/Joke</button>
-                </div>
-                
-                <hr>
-                
-                <button onclick="logoutAdmin()" style="background:#e74c3c;">🔒 Lock Admin Panel</button>
-            `;
-            showSection('admin');
-        }
-        
-        function logoutAdmin() {
-            isAdminAuthenticated = false;
-            showSection('stories');
-        }
-        
-        function saveAll() {
-            localStorage.setItem('stories', JSON.stringify(stories));
-            localStorage.setItem('wordOfDay', JSON.stringify(wordOfDay));
-            localStorage.setItem('lyrics', JSON.stringify(lyrics));
-            localStorage.setItem('videos', JSON.stringify(videos));
-            localStorage.setItem('pictures', JSON.stringify(pictures));
-        }
-        
-        function displayStories() {
-            const container = document.getElementById('stories-list');
-            if(stories.length === 0) {
-                container.innerHTML = '<p>✨ No stories yet. New stories will appear here.</p>';
-                return;
-            }
-            container.innerHTML = stories.map((story, index) => `
-                <div class="post">
-                    <h3>${escapeHtml(story.title)}</h3>
-                    <div class="post-date">📅 ${story.date}</div>
-                    <p style="white-space: pre-wrap;">${escapeHtml(story.content)}</p>
-                    ${story.credit ? `<div class="credit">📌 Source: ${escapeHtml(story.credit)}</div>` : ''}
-                    ${isAdminAuthenticated ? `<button class="delete-btn" onclick="deleteStory(${index})">🗑️ Delete</button>` : ''}
-                </div>
-            `).join('');
-        }
-        
-        function displayWordOfDay() {
-            const container = document.getElementById('word-card');
-            container.innerHTML = `
-                <h3>✨ ${escapeHtml(wordOfDay.word)} ✨</h3>
-                <p>${escapeHtml(wordOfDay.definition)}</p>
-            `;
-        }
-        
-        function displayLyrics() {
-            const container = document.getElementById('lyrics-list');
-            if(lyrics.length === 0) {
-                container.innerHTML = '<p>🎵 No lyrics added yet.</p>';
-                return;
-            }
-            container.innerHTML = lyrics.map((lyric, index) => `
-                <div class="post">
-                    <h3>🎵 ${escapeHtml(lyric.song)}</h3>
-                    <div class="post-date">📅 ${lyric.date}</div>
-                    <p style="white-space: pre-wrap;">${escapeHtml(lyric.lyrics)}</p>
-                    ${lyric.credit ? `<div class="credit">🎼 Credit: ${escapeHtml(lyric.credit)}</div>` : ''}
-                    ${isAdminAuthenticated ? `<button class="delete-btn" onclick="deleteLyrics(${index})">🗑️ Delete</button>` : ''}
-                </div>
-            `).join('');
-        }
-        
-        function displayVideos() {
-            const container = document.getElementById('videos-list');
-            if(videos.length === 0) {
-                container.innerHTML = '<p>🎬 No videos added yet.</p>';
-                return;
-            }
-            container.innerHTML = videos.map((video, index) => {
-                const videoId = extractYouTubeId(video.url);
-                return `
-                    <div class="post">
-                        <h3>🎬 ${escapeHtml(video.title)}</h3>
-                        <div class="post-date">📅 ${video.date}</div>
-                        ${videoId ? `<div class="video-container"><iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe></div>` : `<p>❌ Invalid YouTube URL</p>`}
-                        ${video.credit ? `<div class="credit">📹 Source: ${escapeHtml(video.credit)}</div>` : ''}
-                        ${isAdminAuthenticated ? `<button class="delete-btn" onclick="deleteVideo(${index})">🗑️ Delete</button>` : ''}
-                    </div>
-                `;
-            }).join('');
-        }
-        
-        function displayPictures() {
-            const container = document.getElementById('pictures-list');
-            if(pictures.length === 0) {
-                container.innerHTML = '<p>🖼️ No pictures or jokes added yet.</p>';
-                return;
-            }
-            container.innerHTML = pictures.map((pic, index) => `
-                <div class="post">
-                    <h3>🖼️ ${escapeHtml(pic.title)}</h3>
-                    <div class="post-date">📅 ${pic.date}</div>
-                    ${pic.imageUrl ? `<img src="${escapeHtml(pic.imageUrl)}" alt="${escapeHtml(pic.title)}" style="max-width:100%; border-radius:8px; margin:10px 0;">` : ''}
-                    ${pic.caption ? `<p style="white-space: pre-wrap; font-style:italic;">"${escapeHtml(pic.caption)}"</p>` : ''}
-                    ${pic.credit ? `<div class="credit">📸 Credit: ${escapeHtml(pic.credit)}</div>` : ''}
-                    ${isAdminAuthenticated ? `<button class="delete-btn" onclick="deletePicture(${index})">🗑️ Delete</button>` : ''}
-                </div>
-            `).join('');
-        }
-        
-        function extractYouTubeId(url) {
-            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-            const match = url.match(regExp);
-            return (match && match[2].length === 11) ? match[2] : null;
-        }
-        
-        function addStory() {
-            const title = document.getElementById('story-title').value;
-            const content = document.getElementById('story-content').value;
-            const credit = document.getElementById('story-credit').value;
-            if(title && content) {
-                stories.unshift({ title, content, credit, date: new Date().toLocaleDateString() });
-                saveAll();
-                displayStories();
-                document.getElementById('story-title').value = '';
-                document.getElementById('story-content').value = '';
-                document.getElementById('story-credit').value = '';
-                alert('✅ Story published!');
-            } else {
-                alert('❌ Please fill in both title and content.');
-            }
-        }
-        
-        function deleteStory(index) {
-            if(confirm('Delete this story?')) {
-                stories.splice(index, 1);
-                saveAll();
-                displayStories();
-            }
-        }
-        
-        function setWordOfDay() {
-            const word = document.getElementById('word-title').value;
-            const definition = document.getElementById('word-definition').value;
-            if(word && definition) {
-                wordOfDay = { word, definition };
-                saveAll();
-                displayWordOfDay();
-                alert('✅ Word of the day updated!');
-            } else {
-                alert('❌ Please fill in both word and definition.');
-            }
-        }
-        
-        function addLyrics() {
-            const song = document.getElementById('song-title').value;
-            const lyricsContent = document.getElementById('lyrics-content').value;
-            const credit = document.getElementById('lyrics-credit').value;
-            if(song && lyricsContent) {
-                lyrics.unshift({ song, lyrics: lyricsContent, credit, date: new Date().toLocaleDateString() });
-                saveAll();
-                displayLyrics();
-                document.getElementById('song-title').value = '';
-                document.getElementById('lyrics-content').value = '';
-                document.getElementById('lyrics-credit').value = '';
-                alert('✅ Lyrics added!');
-            } else {
-                alert('❌ Please fill in both song title and lyrics.');
-            }
-        }
-        
-        function deleteLyrics(index) {
-            if(confirm('Delete these lyrics?')) {
-                lyrics.splice(index, 1);
-                saveAll();
-                displayLyrics();
-            }
-        }
-        
-        function addVideo() {
-            const title = document.getElementById('video-title').value;
-            const url = document.getElementById('video-url').value;
-            const credit = document.getElementById('video-credit').value;
-            if(title && url) {
-                videos.unshift({ title, url, credit, date: new Date().toLocaleDateString() });
-                saveAll();
-                displayVideos();
-                document.getElementById('video-title').value = '';
-                document.getElementById('video-url').value = '';
-                document.getElementById('video-credit').value = '';
-                alert('✅ Video added!');
-            } else {
-                alert('❌ Please fill in both title and URL.');
-            }
-        }
-        
-        function deleteVideo(index) {
-            if(confirm('Delete this video?')) {
-                videos.splice(index, 1);
-                saveAll();
-                displayVideos();
-            }
-        }
-        
-        function addPicture() {
-            const title = document.getElementById('picture-title').value;
-            const imageUrl = document.getElementById('picture-url').value;
-            const caption = document.getElementById('picture-caption').value;
-            const credit = document.getElementById('picture-credit').value;
-            if(title) {
-                pictures.unshift({ title, imageUrl, caption, credit, date: new Date().toLocaleDateString() });
-                saveAll();
-                displayPictures();
-                document.getElementById('picture-title').value = '';
-                document.getElementById('picture-url').value = '';
-                document.getElementById('picture-caption').value = '';
-                document.getElementById('picture-credit').value = '';
-                alert('✅ Picture/Joke added!');
-            } else {
-                alert('❌ Please add a title.');
-            }
-        }
-        
-        function deletePicture(index) {
-            if(confirm('Delete this picture/joke?')) {
-                pictures.splice(index, 1);
-                saveAll();
-                displayPictures();
-            }
-        }
-        
-        function showSection(section) {
-            const sections = ['stories', 'word', 'music', 'videos', 'pictures', 'admin'];
-            sections.forEach(s => {
-                const el = document.getElementById(s);
-                if(el) el.style.display = 'none';
-            });
-            document.getElementById(section).style.display = 'block';
-            
-            if(section === 'stories') displayStories();
-            if(section === 'word') displayWordOfDay();
-            if(section === 'music') displayLyrics();
-            if(section === 'videos') displayVideos();
-            if(section === 'pictures') displayPictures();
-        }
-        
-        function escapeHtml(text) {
-            if(!text) return '';
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-        
-        displayStories();
-        displayWordOfDay();
-        displayLyrics();
-        displayVideos();
-        displayPictures();
-    </script>
-</body>
-</html>
+        function disp
