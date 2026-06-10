@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>My Creative Corner</title>
     <style>
         * {
@@ -15,97 +15,144 @@
             background: #f9f7f4;
             color: #2c2c2c;
             line-height: 1.6;
-            padding: 20px;
+            padding: 15px;
         }
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
+            width: 100%;
         }
         header {
             text-align: center;
-            padding: 40px 20px;
+            padding: 30px 15px;
             background: #2c3e50;
             color: white;
             border-radius: 10px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
         h1 {
-            font-size: 2.5rem;
+            font-size: 1.8rem;
+            word-break: break-word;
+        }
+        header p {
+            font-size: 0.9rem;
+            margin-top: 8px;
         }
         nav {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 10px;
             margin-top: 15px;
+            flex-wrap: wrap;
         }
         nav button {
             background: #e67e22;
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 10px 16px;
             cursor: pointer;
-            border-radius: 5px;
-            font-size: 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            flex: 0 0 auto;
         }
-        nav button:hover {
+        nav button:active {
             background: #d35400;
+            transform: scale(0.98);
         }
         .section {
             background: white;
-            padding: 25px;
-            margin-bottom: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            width: 100%;
+            overflow-x: auto;
         }
         .section h2 {
             color: #e67e22;
             margin-bottom: 15px;
             border-bottom: 2px solid #ecf0f1;
-            padding-bottom: 10px;
+            padding-bottom: 8px;
+            font-size: 1.4rem;
         }
         .post {
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             padding: 15px;
             background: #fef9e8;
             border-left: 4px solid #e67e22;
+            border-radius: 8px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
         .post h3 {
             color: #2c3e50;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            font-size: 1.2rem;
         }
         .post-date {
             color: #7f8c8d;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             margin-bottom: 10px;
+        }
+        .credit {
+            font-size: 0.75rem;
+            color: #16a085;
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px dashed #ddd;
+            font-style: italic;
+        }
+        .credit a {
+            color: #2980b9;
+            text-decoration: none;
+        }
+        .credit a:hover {
+            text-decoration: underline;
         }
         .word-card {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 30px;
+            padding: 25px 15px;
             text-align: center;
             border-radius: 15px;
+            word-wrap: break-word;
         }
         .word-card h3 {
-            font-size: 2rem;
+            font-size: 1.6rem;
             margin-bottom: 10px;
+            word-break: break-word;
+        }
+        .word-card p {
+            font-size: 1rem;
+            line-height: 1.5;
         }
         input, textarea {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin: 10px 0;
             border: 1px solid #ddd;
-            border-radius: 5px;
+            border-radius: 8px;
             font-family: inherit;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        textarea {
+            resize: vertical;
         }
         button {
             background: #e67e22;
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 20px;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            width: 100%;
+            max-width: 300px;
         }
-        button:hover {
+        button:active {
             background: #d35400;
         }
         .video-container {
@@ -114,6 +161,7 @@
             height: 0;
             overflow: hidden;
             margin: 15px 0;
+            border-radius: 8px;
         }
         .video-container iframe {
             position: absolute;
@@ -126,14 +174,86 @@
             text-align: center;
             padding: 20px;
             color: #7f8c8d;
-            margin-top: 40px;
+            margin-top: 30px;
+            font-size: 0.8rem;
         }
-        @media (max-width: 600px) {
+        .password-prompt {
+            text-align: center;
+            padding: 30px 20px;
+            background: white;
+            border-radius: 12px;
+        }
+        .password-prompt input {
+            width: 100%;
+            max-width: 250px;
+            margin: 15px auto;
+            text-align: center;
+        }
+        .admin-badge {
+            background: #e74c3c;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        .delete-btn {
+            background: #e74c3c;
+            margin-top: 12px;
+            width: auto;
+            padding: 8px 16px;
+            font-size: 0.85rem;
+        }
+        .admin-section h3 {
+            margin-top: 25px;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            font-size: 1.2rem;
+        }
+        hr {
+            margin: 20px 0;
+            border: none;
+            border-top: 1px solid #ecf0f1;
+        }
+        .help-text {
+            font-size: 0.75rem;
+            color: #7f8c8d;
+            margin-top: -5px;
+            margin-bottom: 10px;
+        }
+        @media (min-width: 768px) {
             body {
-                padding: 10px;
+                padding: 30px;
+            }
+            h1 {
+                font-size: 2.5rem;
+            }
+            nav button {
+                padding: 12px 24px;
+                font-size: 1rem;
+            }
+            .section {
+                padding: 30px;
+            }
+            .word-card h3 {
+                font-size: 2.2rem;
+            }
+            button {
+                width: auto;
+                min-width: 200px;
+            }
+        }
+        @media (max-width: 480px) {
+            nav button {
+                padding: 8px 12px;
+                font-size: 0.75rem;
             }
             .section {
                 padding: 15px;
+            }
+            .post {
+                padding: 12px;
             }
         }
     </style>
@@ -145,95 +265,185 @@
             <p>Short Stories | Word of the Day | Lyrics & Videos</p>
             <nav>
                 <button onclick="showSection('stories')">📚 Stories</button>
-                <button onclick="showSection('word')">📝 Word of Day</button>
-                <button onclick="showSection('music')">🎵 Music & Lyrics</button>
+                <button onclick="showSection('word')">📝 Word</button>
+                <button onclick="showSection('music')">🎵 Lyrics</button>
                 <button onclick="showSection('videos')">🎬 Videos</button>
-                <button onclick="showSection('admin')">⚙️ Admin Panel</button>
+                <button onclick="showSection('pictures')">🖼️ Pictures</button>
+                <button onclick="showAdminPanel()">⚙️ Admin</button>
             </nav>
         </header>
 
-        <!-- Stories Section -->
         <div id="stories" class="section">
             <h2>📚 Short Stories</h2>
             <div id="stories-list"></div>
         </div>
 
-        <!-- Word of the Day Section -->
         <div id="word" class="section" style="display:none;">
             <h2>📝 Word of the Day</h2>
             <div id="word-card" class="word-card"></div>
         </div>
 
-        <!-- Music & Lyrics Section -->
         <div id="music" class="section" style="display:none;">
             <h2>🎵 Music & Lyrics</h2>
             <div id="lyrics-list"></div>
         </div>
 
-        <!-- Videos Section -->
         <div id="videos" class="section" style="display:none;">
             <h2>🎬 Videos</h2>
             <div id="videos-list"></div>
         </div>
 
-        <!-- Admin Panel -->
+        <div id="pictures" class="section" style="display:none;">
+            <h2>🖼️ Pictures & Jokes</h2>
+            <div id="pictures-list"></div>
+        </div>
+
         <div id="admin" class="section" style="display:none;">
-            <h2>⚙️ Admin Panel - Add New Content</h2>
-            
-            <h3>Add Short Story</h3>
-            <input type="text" id="story-title" placeholder="Story Title">
-            <textarea id="story-content" rows="5" placeholder="Write your story here..."></textarea>
-            <button onclick="addStory()">Publish Story</button>
-            
-            <h3 style="margin-top:20px;">Set Word of the Day</h3>
-            <input type="text" id="word-title" placeholder="Word">
-            <textarea id="word-definition" rows="3" placeholder="Definition and example..."></textarea>
-            <button onclick="setWordOfDay()">Set Word of Day</button>
-            
-            <h3 style="margin-top:20px;">Add Lyrics</h3>
-            <input type="text" id="song-title" placeholder="Song Title & Artist">
-            <textarea id="lyrics-content" rows="5" placeholder="Lyrics..."></textarea>
-            <button onclick="addLyrics()">Add Lyrics</button>
-            
-            <h3 style="margin-top:20px;">Add Video (YouTube)</h3>
-            <input type="text" id="video-title" placeholder="Video Title">
-            <input type="text" id="video-url" placeholder="YouTube URL (e.g., https://youtube.com/watch?v=...)">
-            <button onclick="addVideo()">Add Video</button>
+            <div id="admin-content"></div>
         </div>
         
         <footer>
-            <p>✨ Created with love for sharing creativity | All content is original ✨</p>
+            <p>✨ All content shared with respect to original creators | Proper credit given where due ✨</p>
         </footer>
     </div>
 
     <script>
-        // Load saved data from localStorage
+        const ADMIN_PASSWORD = "perseverance2025";
+        
         let stories = JSON.parse(localStorage.getItem('stories')) || [];
-        let wordOfDay = JSON.parse(localStorage.getItem('wordOfDay')) || { word: "Inspire", definition: "To fill someone with the urge to do something creative." };
+        let wordOfDay = JSON.parse(localStorage.getItem('wordOfDay')) || { 
+            word: "Perseverance", 
+            definition: "Steady persistence in a course of action, especially in spite of difficulties, obstacles, or discouragement." 
+        };
         let lyrics = JSON.parse(localStorage.getItem('lyrics')) || [];
         let videos = JSON.parse(localStorage.getItem('videos')) || [];
+        let pictures = JSON.parse(localStorage.getItem('pictures')) || [];
+        let isAdminAuthenticated = false;
         
-        // Save functions
+        function showAdminPanel() {
+            if(isAdminAuthenticated) {
+                displayAdminPanel();
+                showSection('admin');
+            } else {
+                showPasswordPrompt();
+            }
+        }
+        
+        function showPasswordPrompt() {
+            const adminDiv = document.getElementById('admin-content');
+            adminDiv.innerHTML = `
+                <div class="password-prompt">
+                    <h2>🔐 Admin Access</h2>
+                    <p>Enter password to manage content:</p>
+                    <input type="password" id="admin-password" placeholder="Enter password">
+                    <br>
+                    <button onclick="checkPassword()">Unlock Panel</button>
+                </div>
+            `;
+            showSection('admin');
+        }
+        
+        function checkPassword() {
+            const password = document.getElementById('admin-password').value;
+            if(password === ADMIN_PASSWORD) {
+                isAdminAuthenticated = true;
+                displayAdminPanel();
+            } else {
+                alert('❌ Incorrect password!');
+                showSection('stories');
+            }
+        }
+        
+        function displayAdminPanel() {
+            const adminDiv = document.getElementById('admin-content');
+            adminDiv.innerHTML = `
+                <div class="admin-badge">🔒 Admin Mode - You can edit content</div>
+                <h2>⚙️ Admin Panel</h2>
+                
+                <div class="admin-section">
+                    <h3>📖 Add Short Story</h3>
+                    <input type="text" id="story-title" placeholder="Story Title">
+                    <textarea id="story-content" rows="5" placeholder="Write your story here..."></textarea>
+                    <input type="text" id="story-credit" placeholder="Source/Credit (e.g., 'Original by Me' or 'Inspired by...')">
+                    <div class="help-text">📌 Always credit your sources when inspired by others</div>
+                    <button onclick="addStory()">Publish Story</button>
+                </div>
+                
+                <hr>
+                
+                <div class="admin-section">
+                    <h3>📝 Set Word of the Day</h3>
+                    <input type="text" id="word-title" placeholder="Word" value="${escapeHtml(wordOfDay.word)}">
+                    <textarea id="word-definition" rows="3" placeholder="Definition and example...">${escapeHtml(wordOfDay.definition)}</textarea>
+                    <button onclick="setWordOfDay()">Update Word</button>
+                </div>
+                
+                <hr>
+                
+                <div class="admin-section">
+                    <h3>🎵 Add Lyrics</h3>
+                    <input type="text" id="song-title" placeholder="Song Title & Artist">
+                    <textarea id="lyrics-content" rows="5" placeholder="Lyrics..."></textarea>
+                    <input type="text" id="lyrics-credit" placeholder="Credit/Source (e.g., 'Lyrics by Artist Name')">
+                    <div class="help-text">⚠️ For personal use only. Always credit songwriters/artists.</div>
+                    <button onclick="addLyrics()">Add Lyrics</button>
+                </div>
+                
+                <hr>
+                
+                <div class="admin-section">
+                    <h3>🎬 Add Video (YouTube)</h3>
+                    <input type="text" id="video-title" placeholder="Video Title">
+                    <input type="text" id="video-url" placeholder="YouTube URL">
+                    <input type="text" id="video-credit" placeholder="Credit/Source (e.g., 'Video by YouTube Channel Name')">
+                    <button onclick="addVideo()">Add Video</button>
+                </div>
+                
+                <hr>
+                
+                <div class="admin-section">
+                    <h3>🖼️ Add Picture or Joke</h3>
+                    <input type="text" id="picture-title" placeholder="Title (e.g., 'Funny Cat' or 'Beautiful Sunset')">
+                    <input type="text" id="picture-url" placeholder="Image URL (upload to Imgur or use direct link)">
+                    <textarea id="picture-caption" rows="3" placeholder="Caption or joke text..."></textarea>
+                    <input type="text" id="picture-credit" placeholder="Credit/Source (e.g., 'Photo by Photographer Name' or 'Joke from...')">
+                    <div class="help-text">📸 For images: Use free stock photos (Unsplash, Pexels) or your own. Always credit!</div>
+                    <button onclick="addPicture()">Add Picture/Joke</button>
+                </div>
+                
+                <hr>
+                
+                <button onclick="logoutAdmin()" style="background:#e74c3c;">🔒 Lock Admin Panel</button>
+            `;
+            showSection('admin');
+        }
+        
+        function logoutAdmin() {
+            isAdminAuthenticated = false;
+            showSection('stories');
+        }
+        
         function saveAll() {
             localStorage.setItem('stories', JSON.stringify(stories));
             localStorage.setItem('wordOfDay', JSON.stringify(wordOfDay));
             localStorage.setItem('lyrics', JSON.stringify(lyrics));
             localStorage.setItem('videos', JSON.stringify(videos));
+            localStorage.setItem('pictures', JSON.stringify(pictures));
         }
         
-        // Display functions
         function displayStories() {
             const container = document.getElementById('stories-list');
             if(stories.length === 0) {
-                container.innerHTML = '<p>No stories yet. Go to Admin Panel to add your first story!</p>';
+                container.innerHTML = '<p>✨ No stories yet. New stories will appear here.</p>';
                 return;
             }
             container.innerHTML = stories.map((story, index) => `
                 <div class="post">
                     <h3>${escapeHtml(story.title)}</h3>
-                    <div class="post-date">${story.date}</div>
+                    <div class="post-date">📅 ${story.date}</div>
                     <p style="white-space: pre-wrap;">${escapeHtml(story.content)}</p>
-                    <button onclick="deleteStory(${index})" style="background:#e74c3c; margin-top:10px;">Delete</button>
+                    ${story.credit ? `<div class="credit">📌 Source: ${escapeHtml(story.credit)}</div>` : ''}
+                    ${isAdminAuthenticated ? `<button class="delete-btn" onclick="deleteStory(${index})">🗑️ Delete</button>` : ''}
                 </div>
             `).join('');
         }
@@ -243,22 +453,22 @@
             container.innerHTML = `
                 <h3>✨ ${escapeHtml(wordOfDay.word)} ✨</h3>
                 <p>${escapeHtml(wordOfDay.definition)}</p>
-                <small>Refresh daily for new inspiration!</small>
             `;
         }
         
         function displayLyrics() {
             const container = document.getElementById('lyrics-list');
             if(lyrics.length === 0) {
-                container.innerHTML = '<p>No lyrics added yet.</p>';
+                container.innerHTML = '<p>🎵 No lyrics added yet.</p>';
                 return;
             }
             container.innerHTML = lyrics.map((lyric, index) => `
                 <div class="post">
                     <h3>🎵 ${escapeHtml(lyric.song)}</h3>
-                    <div class="post-date">${lyric.date}</div>
+                    <div class="post-date">📅 ${lyric.date}</div>
                     <p style="white-space: pre-wrap;">${escapeHtml(lyric.lyrics)}</p>
-                    <button onclick="deleteLyrics(${index})" style="background:#e74c3c; margin-top:10px;">Delete</button>
+                    ${lyric.credit ? `<div class="credit">🎼 Credit: ${escapeHtml(lyric.credit)}</div>` : ''}
+                    ${isAdminAuthenticated ? `<button class="delete-btn" onclick="deleteLyrics(${index})">🗑️ Delete</button>` : ''}
                 </div>
             `).join('');
         }
@@ -266,7 +476,7 @@
         function displayVideos() {
             const container = document.getElementById('videos-list');
             if(videos.length === 0) {
-                container.innerHTML = '<p>No videos added yet.</p>';
+                container.innerHTML = '<p>🎬 No videos added yet.</p>';
                 return;
             }
             container.innerHTML = videos.map((video, index) => {
@@ -274,12 +484,31 @@
                 return `
                     <div class="post">
                         <h3>🎬 ${escapeHtml(video.title)}</h3>
-                        <div class="post-date">${video.date}</div>
-                        ${videoId ? `<div class="video-container"><iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe></div>` : `<p>Invalid YouTube URL</p>`}
-                        <button onclick="deleteVideo(${index})" style="background:#e74c3c; margin-top:10px;">Delete</button>
+                        <div class="post-date">📅 ${video.date}</div>
+                        ${videoId ? `<div class="video-container"><iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe></div>` : `<p>❌ Invalid YouTube URL</p>`}
+                        ${video.credit ? `<div class="credit">📹 Source: ${escapeHtml(video.credit)}</div>` : ''}
+                        ${isAdminAuthenticated ? `<button class="delete-btn" onclick="deleteVideo(${index})">🗑️ Delete</button>` : ''}
                     </div>
                 `;
             }).join('');
+        }
+        
+        function displayPictures() {
+            const container = document.getElementById('pictures-list');
+            if(pictures.length === 0) {
+                container.innerHTML = '<p>🖼️ No pictures or jokes added yet.</p>';
+                return;
+            }
+            container.innerHTML = pictures.map((pic, index) => `
+                <div class="post">
+                    <h3>🖼️ ${escapeHtml(pic.title)}</h3>
+                    <div class="post-date">📅 ${pic.date}</div>
+                    ${pic.imageUrl ? `<img src="${escapeHtml(pic.imageUrl)}" alt="${escapeHtml(pic.title)}" style="max-width:100%; border-radius:8px; margin:10px 0;">` : ''}
+                    ${pic.caption ? `<p style="white-space: pre-wrap; font-style:italic;">"${escapeHtml(pic.caption)}"</p>` : ''}
+                    ${pic.credit ? `<div class="credit">📸 Credit: ${escapeHtml(pic.credit)}</div>` : ''}
+                    ${isAdminAuthenticated ? `<button class="delete-btn" onclick="deletePicture(${index})">🗑️ Delete</button>` : ''}
+                </div>
+            `).join('');
         }
         
         function extractYouTubeId(url) {
@@ -288,19 +517,20 @@
             return (match && match[2].length === 11) ? match[2] : null;
         }
         
-        // Add/Delete functions
         function addStory() {
             const title = document.getElementById('story-title').value;
             const content = document.getElementById('story-content').value;
+            const credit = document.getElementById('story-credit').value;
             if(title && content) {
-                stories.unshift({ title, content, date: new Date().toLocaleDateString() });
+                stories.unshift({ title, content, credit, date: new Date().toLocaleDateString() });
                 saveAll();
                 displayStories();
                 document.getElementById('story-title').value = '';
                 document.getElementById('story-content').value = '';
-                alert('Story published!');
+                document.getElementById('story-credit').value = '';
+                alert('✅ Story published!');
             } else {
-                alert('Please fill in both title and content.');
+                alert('❌ Please fill in both title and content.');
             }
         }
         
@@ -319,26 +549,26 @@
                 wordOfDay = { word, definition };
                 saveAll();
                 displayWordOfDay();
-                document.getElementById('word-title').value = '';
-                document.getElementById('word-definition').value = '';
-                alert('Word of the day updated!');
+                alert('✅ Word of the day updated!');
             } else {
-                alert('Please fill in both word and definition.');
+                alert('❌ Please fill in both word and definition.');
             }
         }
         
         function addLyrics() {
             const song = document.getElementById('song-title').value;
             const lyricsContent = document.getElementById('lyrics-content').value;
+            const credit = document.getElementById('lyrics-credit').value;
             if(song && lyricsContent) {
-                lyrics.unshift({ song, lyrics: lyricsContent, date: new Date().toLocaleDateString() });
+                lyrics.unshift({ song, lyrics: lyricsContent, credit, date: new Date().toLocaleDateString() });
                 saveAll();
                 displayLyrics();
                 document.getElementById('song-title').value = '';
                 document.getElementById('lyrics-content').value = '';
-                alert('Lyrics added!');
+                document.getElementById('lyrics-credit').value = '';
+                alert('✅ Lyrics added!');
             } else {
-                alert('Please fill in both song title and lyrics.');
+                alert('❌ Please fill in both song title and lyrics.');
             }
         }
         
@@ -353,15 +583,17 @@
         function addVideo() {
             const title = document.getElementById('video-title').value;
             const url = document.getElementById('video-url').value;
+            const credit = document.getElementById('video-credit').value;
             if(title && url) {
-                videos.unshift({ title, url, date: new Date().toLocaleDateString() });
+                videos.unshift({ title, url, credit, date: new Date().toLocaleDateString() });
                 saveAll();
                 displayVideos();
                 document.getElementById('video-title').value = '';
                 document.getElementById('video-url').value = '';
-                alert('Video added!');
+                document.getElementById('video-credit').value = '';
+                alert('✅ Video added!');
             } else {
-                alert('Please fill in both title and URL.');
+                alert('❌ Please fill in both title and URL.');
             }
         }
         
@@ -373,31 +605,60 @@
             }
         }
         
+        function addPicture() {
+            const title = document.getElementById('picture-title').value;
+            const imageUrl = document.getElementById('picture-url').value;
+            const caption = document.getElementById('picture-caption').value;
+            const credit = document.getElementById('picture-credit').value;
+            if(title) {
+                pictures.unshift({ title, imageUrl, caption, credit, date: new Date().toLocaleDateString() });
+                saveAll();
+                displayPictures();
+                document.getElementById('picture-title').value = '';
+                document.getElementById('picture-url').value = '';
+                document.getElementById('picture-caption').value = '';
+                document.getElementById('picture-credit').value = '';
+                alert('✅ Picture/Joke added!');
+            } else {
+                alert('❌ Please add a title.');
+            }
+        }
+        
+        function deletePicture(index) {
+            if(confirm('Delete this picture/joke?')) {
+                pictures.splice(index, 1);
+                saveAll();
+                displayPictures();
+            }
+        }
+        
         function showSection(section) {
-            const sections = ['stories', 'word', 'music', 'videos', 'admin'];
+            const sections = ['stories', 'word', 'music', 'videos', 'pictures', 'admin'];
             sections.forEach(s => {
-                document.getElementById(s).style.display = 'none';
+                const el = document.getElementById(s);
+                if(el) el.style.display = 'none';
             });
             document.getElementById(section).style.display = 'block';
             
-            // Refresh content when switching views
             if(section === 'stories') displayStories();
             if(section === 'word') displayWordOfDay();
             if(section === 'music') displayLyrics();
             if(section === 'videos') displayVideos();
+            if(section === 'pictures') displayPictures();
         }
         
         function escapeHtml(text) {
+            if(!text) return '';
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
         }
         
-        // Initial display
         displayStories();
         displayWordOfDay();
         displayLyrics();
         displayVideos();
+        displayPictures();
     </script>
 </body>
 </html>
